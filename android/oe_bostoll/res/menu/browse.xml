@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_browse"
+        android:id="@+id/action_search"
         android:showAsAction="ifRoom|withText"
-        android:icon="@drawable/ic_storage"
-        android:title="@string/action_browse"/>
+        android:icon="@drawable/ic_search"
+        android:title="@string/action_search"/>
     
     <item
         android:id="@+id/action_settings"

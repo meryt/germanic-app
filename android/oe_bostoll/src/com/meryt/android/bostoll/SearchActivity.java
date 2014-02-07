@@ -28,7 +28,6 @@ public class SearchActivity extends FragmentActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -36,8 +35,6 @@ public class SearchActivity extends FragmentActivity {
             case R.id.action_browse:
                 Intent browseIntent = new Intent(this, BrowseActivity.class);
                 startActivity(browseIntent);
-                return true;
-            case R.id.action_search:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
