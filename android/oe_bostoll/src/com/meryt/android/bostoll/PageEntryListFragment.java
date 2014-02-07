@@ -1,8 +1,5 @@
 package com.meryt.android.bostoll;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -10,13 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import com.meryt.android.bostoll.data.HeaderListAdapter;
+import com.meryt.android.bostoll.data.EntryListAdapter;
 
-public class HeaderLoaderListFragment extends ListFragment {
+public class PageEntryListFragment extends ListFragment {
 
-    HeaderListAdapter mAdapter;
+    private EntryListAdapter mAdapter;
 
-    List<HeaderClickListener> clickListeners = new ArrayList<HeaderClickListener>();
+    public static final int ENTRY_LOADER = 1;
 
     public interface HeaderClickListener {
         public void onHeaderClick(String pageId);
@@ -33,30 +30,24 @@ public class HeaderLoaderListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new HeaderListAdapter(
+        mAdapter = new EntryListAdapter(
                 getActivity(),
-                android.R.layout.simple_list_item_1,
+                R.layout.list_item_entry,
                 null,
-                new String[] {"header"},
-                new int[] { android.R.id.text1 },
+                new String[] {"entry"},
+                new int[] { R.id.text },
                 0
        );
+       mAdapter.setPageId(getArguments().getString("page_id"));
        setListAdapter(mAdapter);
 
-       getLoaderManager().initLoader(0,  savedInstanceState, mAdapter);
-    }
-
-    public void addHeaderClickListener(HeaderClickListener listener) {
-        clickListeners.add(listener);
+       getLoaderManager().initLoader(ENTRY_LOADER,  savedInstanceState, mAdapter);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Cursor cursor = (Cursor)l.getItemAtPosition(position);
-        String pageId = cursor.getString(cursor.getColumnIndexOrThrow("id"));
-        for (HeaderClickListener listener : clickListeners) {
-            listener.onHeaderClick(pageId);
-        }
+        String entryId = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
     }
 }
 

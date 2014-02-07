@@ -1,14 +1,14 @@
 package com.meryt.android.bostoll;
 
-import android.os.Bundle;
-
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.meryt.android.bostoll.HeaderLoaderListFragment.HeaderClickListener;
 
-public class BrowseActivity extends FragmentActivity {
+public class BrowseActivity extends FragmentActivity implements HeaderClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class BrowseActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.search, menu);
+        getMenuInflater().inflate(R.menu.browse, menu);
         return true;
     }
 
@@ -40,8 +40,26 @@ public class BrowseActivity extends FragmentActivity {
 
     private void setupList() {
         HeaderLoaderListFragment headerList = new HeaderLoaderListFragment();
+        headerList.addHeaderClickListener(this);
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.browse_main, headerList);
+        t.addToBackStack(null);
         t.commit();
+    }
+
+    public void onHeaderClick(String pageId) {
+        browseToPage(pageId);
+    }
+
+    private void browseToPage(String pageId) {
+        PageEntryListFragment entryList = new PageEntryListFragment();
+        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("page_id", pageId);
+        entryList.setArguments(args);
+        t.replace(R.id.browse_main, entryList);
+        t.addToBackStack(null);
+        t.commit();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
