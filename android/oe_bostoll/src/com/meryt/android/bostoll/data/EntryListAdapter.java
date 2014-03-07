@@ -44,12 +44,12 @@ public class EntryListAdapter extends SimpleCursorAdapter implements LoaderManag
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = {"rowid _id", "page_id", "headword", "entry", "line_num"};
+        String[] projection = { "rowid _id", Entry.COL_PAGE_ID, Entry.COL_HEADWORD, Entry.COL_ENTRY, Entry.COL_LINE_NUM };
 
         DictionaryDatabase dbFile = new DictionaryDatabase(context);
         database = dbFile.getReadableDatabase();
 
-        return new CursorLoader(context, null, projection, "page_id = ?", new String[] { pageId }, "_id") {
+        return new CursorLoader(context, null, projection, Entry.COL_PAGE_ID + " = ?", new String[] { pageId }, "_id") {
             @Override
             public Cursor loadInBackground() {
                 return database.query(

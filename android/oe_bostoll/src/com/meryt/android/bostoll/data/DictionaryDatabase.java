@@ -5,6 +5,8 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DictionaryDatabase extends SQLiteAssetHelper {
 
+    public static final String TABLE_PAGES = "pages";
+
     private static final String DATABASE_NAME = "oe_bostoll.sqlite";
 
     private static final int DATABASE_VERSION = 1;

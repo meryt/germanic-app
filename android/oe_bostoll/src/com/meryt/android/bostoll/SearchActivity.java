@@ -1,7 +1,6 @@
 package com.meryt.android.bostoll;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -44,18 +43,5 @@ public class SearchActivity extends FragmentActivity {
     protected void setupDatabase() {
         DictionaryDatabase dbFile = new DictionaryDatabase(this);
         database = dbFile.getReadableDatabase();
-
-        String[] projection = {"id", "header", "line_num"};
-
-        Cursor c = database.query(
-            "pages",
-            projection,
-            null,
-            null,
-            null,
-            null,
-            "header DESC"
-        );
-
     }
 }

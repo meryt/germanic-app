@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import com.meryt.android.bostoll.data.Header;
 import com.meryt.android.bostoll.data.HeaderListAdapter;
 
 public class HeaderLoaderListFragment extends ListFragment {
@@ -19,7 +20,7 @@ public class HeaderLoaderListFragment extends ListFragment {
     List<HeaderClickListener> clickListeners = new ArrayList<HeaderClickListener>();
 
     public interface HeaderClickListener {
-        public void onHeaderClick(String pageId);
+        public void onHeaderClick(String pageId, String pageTitle);
     }
 
     @Override
@@ -37,13 +38,14 @@ public class HeaderLoaderListFragment extends ListFragment {
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 null,
-                new String[] {"header"},
+                new String[] { Header.COL_HEADER },
                 new int[] { android.R.id.text1 },
                 0
        );
        setListAdapter(mAdapter);
 
-       getLoaderManager().initLoader(0,  savedInstanceState, mAdapter);
+       getLoaderManager().initLoader(0, savedInstanceState, mAdapter);
+       getActivity().getActionBar().setTitle(R.string.title_browse);
     }
 
     public void addHeaderClickListener(HeaderClickListener listener) {
@@ -53,9 +55,10 @@ public class HeaderLoaderListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Cursor cursor = (Cursor)l.getItemAtPosition(position);
-        String pageId = cursor.getString(cursor.getColumnIndexOrThrow("id"));
+        String pageId = cursor.getString(cursor.getColumnIndexOrThrow(Header.COL_ID));
+        String pageHeader = cursor.getString(cursor.getColumnIndexOrThrow(Header.COL_HEADER));
         for (HeaderClickListener listener : clickListeners) {
-            listener.onHeaderClick(pageId);
+            listener.onHeaderClick(pageId, pageHeader);
         }
     }
 }

@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.meryt.android.bostoll.HeaderLoaderListFragment.HeaderClickListener;
+import com.meryt.android.bostoll.data.Header;
 
 public class BrowseActivity extends FragmentActivity implements HeaderClickListener {
 
@@ -29,6 +31,14 @@ public class BrowseActivity extends FragmentActivity implements HeaderClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case android.R.id.home:
+                // Don't go back if there's nothing left on the stack.
+                if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+                    onBackPressed();
+                }
+                // Don't show the up button if there's no going back.
+                getActionBar().setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
+                return true;
             case R.id.action_search:
                 Intent searchIntent = new Intent(this, SearchActivity.class);
                 startActivity(searchIntent);
@@ -43,23 +53,25 @@ public class BrowseActivity extends FragmentActivity implements HeaderClickListe
         headerList.addHeaderClickListener(this);
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.browse_main, headerList);
-        t.addToBackStack(null);
+        //t.addToBackStack(null);
         t.commit();
     }
 
-    public void onHeaderClick(String pageId) {
-        browseToPage(pageId);
+    public void onHeaderClick(String pageId, String pageHeader) {
+        browseToPage(pageId, pageHeader);
     }
 
-    private void browseToPage(String pageId) {
+    private void browseToPage(String pageId, String pageHeader) {
         PageEntryListFragment entryList = new PageEntryListFragment();
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         Bundle args = new Bundle();
-        args.putString("page_id", pageId);
+        args.putString(Header.COL_ID, pageId);
+        args.putString(Header.COL_HEADER, pageHeader);
         entryList.setArguments(args);
         t.replace(R.id.browse_main, entryList);
         t.addToBackStack(null);
         t.commit();
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setTitle(pageHeader);
     }
 }

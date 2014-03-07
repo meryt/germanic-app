@@ -1,6 +1,5 @@
 package com.meryt.android.bostoll;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.meryt.android.bostoll.data.EntryListAdapter;
+import com.meryt.android.bostoll.data.Header;
 
 public class PageEntryListFragment extends ListFragment {
 
@@ -37,17 +37,18 @@ public class PageEntryListFragment extends ListFragment {
                 new String[] {"entry"},
                 new int[] { R.id.text },
                 0
-       );
-       mAdapter.setPageId(getArguments().getString("page_id"));
-       setListAdapter(mAdapter);
+                );
+        mAdapter.setPageId(getArguments().getString(Header.COL_ID));
+        getActivity().getActionBar().setTitle(getArguments().getString(Header.COL_HEADER));
+        setListAdapter(mAdapter);
 
-       getLoaderManager().initLoader(ENTRY_LOADER,  savedInstanceState, mAdapter);
+        getLoaderManager().initLoader(ENTRY_LOADER, savedInstanceState, mAdapter);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Cursor cursor = (Cursor)l.getItemAtPosition(position);
-        String entryId = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
+        // Cursor cursor = (Cursor)l.getItemAtPosition(position);
+        // String entryId = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
     }
 }
 
