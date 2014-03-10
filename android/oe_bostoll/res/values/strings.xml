@@ -8,6 +8,8 @@
     <string name="empty_no_headers">No headers found</string>
     <string name="err_cant_read_database">Unable to open the dictionary database.</string>
     <string name="hello_world">Hello world!</string>
+    <string name="subtitle_book">Bosworth/Toller Dictionary of Old English</string>
+    <string name="title_book">An Anglo-Saxon Dictionary</string>
     <string name="title_browse">Browse Dictionary</string>
     <string name="title_search">Search Dictionary</string>
 
