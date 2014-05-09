@@ -11,7 +11,6 @@ exports.index = function(req, res, next) {
 
     pages.fetch({
         success: function() {
-            console.log(pages);
             res.locals.sd.PAGES = pages.toJSON();
             res.render('index', { pages: pages.models });
         },

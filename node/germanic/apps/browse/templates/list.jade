@@ -6,4 +6,6 @@
 //-
 
 for page in pages
-    li= page.get('page_id')
+    li
+        a(href='/pages/' + page.get('page_id'))
+            = page.get('header')
