@@ -50,7 +50,24 @@ class PagePage(Simple):
 
     # /pages/<page_id>
     def render_GET(self, request):
-        return "<html><body>%s</body></html>" % (self.page_id,)
+        self.logRequest(request)
+
+        request.setHeader('content-type', 'application/json')
+
+        responses = []
+
+        db = sqlite3.connect('./oi_cleasvig.sqlite')
+        with db:
+            cur = db.cursor()
+            cur.execute("SELECT headword, entry FROM entries WHERE page_id = ? ORDER BY line_num", (self.page_id,))
+            rows = cur.fetchall()
+            for row in rows:
+                responses.append({
+                    "headword" : row[0],
+                    "entry"  : row[1]
+                })
+
+        return json.dumps(responses)
 
 class PageBrowser(Simple):
     '''
