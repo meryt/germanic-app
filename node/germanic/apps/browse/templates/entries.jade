@@ -1,0 +1,12 @@
+doctype html
+html
+    head
+        title Cleasby-Vigfusson Old Icelandic Dictionary
+        link( type='text/css', rel='stylesheet', href=('/assets/browse' + sd.CSS_EXT) )
+    body
+        h1 All Entries for this page
+        ul#page-list
+            include entry-list
+        #scripts
+            != sharify.script()
+            script( src='/assets/pages' + sd.JS_EXT )
