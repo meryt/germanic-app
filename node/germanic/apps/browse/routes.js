@@ -46,7 +46,7 @@ exports.entries = function(req, res, next) {
     entries.fetch({
         success: function() {
             res.locals.sd.ENTRIES = entries.toJSON();
-            res.render('entries', { entries: entries.models });
+            res.render('entries', { entries: entries.models, page_id: entries.page_id });
         },
         error: function(m, err) {
             next(err.text);

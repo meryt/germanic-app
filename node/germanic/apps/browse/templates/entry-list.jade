@@ -1,4 +1,4 @@
 for entry in entries
-    li
-        p
-            != entry.get('entry')
+    dl
+        dt!= entry.get('headword')
+            dd!= entry.get('entry')
