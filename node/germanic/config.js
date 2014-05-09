@@ -8,7 +8,7 @@
 module.exports = {
   NODE_ENV: 'development',
   PORT: 4000,
-  API_URL: 'https://<yourapihere>'
+  API_URL: 'http://lugh:8880'
 }
 
 // Override any values with env variables

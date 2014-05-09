@@ -45,9 +45,7 @@ module.exports = function(app) {
   }
 
   // Mount apps
-  app.use('/', function(req, res) {
-    res.send('Start by writing an app in /apps and mounting it in /lib/setup!');
-  });
+  app.use(require('../apps/browse'));
 
   // More general middleware
   app.use(express.static(path.resolve(__dirname, '../public')));
