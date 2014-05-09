@@ -5,8 +5,8 @@ html
         link( type='text/css', rel='stylesheet', href=('/assets/browse' + sd.CSS_EXT) )
     body
         h1 Browse Pages
-        p
-            a(href='/pages') All Pages
+        ul#page-list
+            include list
         #scripts
             != sharify.script()
             script( src='/assets/pages' + sd.JS_EXT )
